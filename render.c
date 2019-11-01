@@ -86,6 +86,13 @@ void render_frame(struct swaylock_surface *surface) {
 		(state->args.radius + state->args.thickness);
 	wl_subsurface_set_position(surface->subsurface, subsurf_xpos, subsurf_ypos);
 
+    if (state->args.colors.color_change_invalid_login && state->failed_attempts == 1) {
+        // change background on failed attempt
+        state->args.colors.background = state->args.colors.color_change_invalid_login;
+        render_frame_background(surface);
+    }
+
+
 	surface->current_buffer = get_next_buffer(state->shm,
 			surface->indicator_buffers, buffer_width, buffer_height);
 	if (surface->current_buffer == NULL) {

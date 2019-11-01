@@ -547,6 +547,7 @@ static int parse_options(int argc, char **argv, struct swaylock_state *state,
 		{"image", required_argument, NULL, 'i'},
 		{"disable-caps-lock-text", no_argument, NULL, 'L'},
 		{"indicator-caps-lock", no_argument, NULL, 'l'},
+        {"change-color", required_argument, NULL, 'm'},
 		{"line-uses-inside", no_argument, NULL, 'n'},
 		{"line-uses-ring", no_argument, NULL, 'r'},
 		{"scaling", required_argument, NULL, 's'},
@@ -619,6 +620,8 @@ static int parse_options(int argc, char **argv, struct swaylock_state *state,
 			"Disable the Caps Lock text.\n"
 		"  -l, --indicator-caps-lock        "
 			"Show the current Caps Lock state also on the indicator.\n"
+        "  -m, --change-color <color>       "
+            "Change color on invalid login attempt.\n"
 		"  -s, --scaling <mode>             "
 			"Image scaling mode: stretch, fill, fit, center, tile, solid_color.\n"
 		"  -t, --tiling                     "
@@ -712,7 +715,7 @@ static int parse_options(int argc, char **argv, struct swaylock_state *state,
 	optind = 1;
 	while (1) {
 		int opt_idx = 0;
-		c = getopt_long(argc, argv, "c:deFfhi:kKLlnrs:tuvC:", long_options,
+		c = getopt_long(argc, argv, "cm:deFfhi:kKLlnrs:tuvC:", long_options,
 				&opt_idx);
 		if (c == -1) {
 			break;
@@ -771,6 +774,11 @@ static int parse_options(int argc, char **argv, struct swaylock_state *state,
 				state->args.show_caps_lock_indicator = true;
 			}
 			break;
+        case 'm':
+            if (state) {
+                state->args.colors.color_change_invalid_login = parse_color(optarg);
+            }
+            break;
 		case 'n':
 			if (line_mode) {
 				*line_mode = LM_INSIDE;

@@ -33,6 +33,7 @@ struct swaylock_colors {
 	uint32_t key_highlight;
 	uint32_t caps_lock_bs_highlight;
 	uint32_t caps_lock_key_highlight;
+    uint32_t color_change_invalid_login;
 	uint32_t separator;
 	uint32_t layout_background;
 	uint32_t layout_border;
